@@ -20,33 +20,47 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        const athletes = (await axios.get("/api/athletes")).data;
-        await this.setState({
-            athletes: athletes,
-        });
+        try {
+            const athletes = (await axios.get("/api/athletes")).data;
+            await this.setState({
+                athletes: athletes,
+            });
+        } catch (err) {
+            console.log("Could not make server request: ", err);
+        }
     }
 
     async updateSelectedAthlete(athlete) {
-        const workouts = (await axios.get(`/api/workouts/${athlete.id}`)).data;
-        const summary = (await axios.get(`/api/workouts/summary/${athlete.id}`))
-            .data;
-        await this.setState({
-            labels: ["Summary", "All Workouts"],
-            selectedAthlete: athlete,
-            selectedAthleteWorkouts: workouts,
-            selectedAthleteSummary: summary,
-        });
+        try {
+            const workouts = (await axios.get(`/api/workouts/${athlete.id}`))
+                .data;
+            const summary = (
+                await axios.get(`/api/workouts/summary/${athlete.id}`)
+            ).data;
+            await this.setState({
+                labels: ["Summary", "All Workouts"],
+                selectedAthlete: athlete,
+                selectedAthleteWorkouts: workouts,
+                selectedAthleteSummary: summary,
+            });
+        } catch (err) {
+            console.log("Could not make server request: ", err);
+        }
     }
 
     async backToHomepage() {
-        const athletes = (await axios.get("/api/athletes")).data;
-        this.setState({
-            mainLabels: ["Current Clients"],
-            athletes: athletes,
-            selectedAthlete: {},
-            selectedAthleteWorkouts: [],
-            selectedAthleteSummary: [],
-        });
+        try {
+            const athletes = (await axios.get("/api/athletes")).data;
+            this.setState({
+                mainLabels: ["Current Clients"],
+                athletes: athletes,
+                selectedAthlete: {},
+                selectedAthleteWorkouts: [],
+                selectedAthleteSummary: [],
+            });
+        } catch (err) {
+            console.log("Could not make server request: ", err);
+        }
     }
 
     render() {
