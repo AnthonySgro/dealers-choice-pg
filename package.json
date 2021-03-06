@@ -4,7 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "npm run start-server & npm run build-watch",
+        "start": "npm run build & node server",
+        "build": "webpack --mode=production",
+        "start:dev": "npm run start-server & npm run build-watch",
         "build-watch": "webpack -w --mode=development",
         "start-server": "nodemon server --ignore public"
     },
@@ -12,7 +14,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "axios": "^0.21.1",
         "express": "^4.17.1",
+        "lodash": "^4.17.21",
         "morgan": "^1.10.0",
         "pg": "^8.5.1",
         "react": "^17.0.1",

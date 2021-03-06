@@ -4,6 +4,12 @@ const morgan = require("morgan");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Database
+const { syncAndSeed, db } = require("./db");
+syncAndSeed();
+
+const apiRoute = require("./routes/api");
+
 // Logging middleware
 app.use(morgan("dev"));
 
@@ -13,6 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Static middleware
 app.use(express.static(path.join(__dirname, "../public")));
+
+app.use("/api", apiRoute);
 
 // Send file
 app.get("/", (req, res, next) => {
